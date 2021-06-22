@@ -1,4 +1,4 @@
-name: 'Bandit Notify'
+name: 'Parse output to notification message'
 description: 'Notifies to Slack when Bandit issues are found'
 inputs:
   slack-token:
@@ -16,6 +16,11 @@ inputs:
   tool:
     description: 'name of tool'
     required: true
+outputs:
+  message:
+    description: 'Generated message'
+  isEmpty:
+    description: 'Boolean to check that the message is not empty'
 runs:
   using: 'docker'
   image: 'Dockerfile'
