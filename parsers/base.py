@@ -1,8 +1,15 @@
-class MessageBuilderBase:
+class BaseMessageRenderer:
     """
-        message_builder = BanditMessageBuilder()
-        message_builder.render_to_slack()
-        message_builder.render_to_email()
+    Base class for rendering a message from external input for a specific communication channel
+
+    def parse(self):
+        return {}
+
+    def render_to_slack(self):
+        return {}
+
+    def is_empty(self):
+        return False
     """
 
     def __init__(self, output, **context):
@@ -16,5 +23,8 @@ class MessageBuilderBase:
     def is_empty(self):
         raise NotImplementedError
 
-    def render_to_slack(self):
-        raise NotImplementedError
+    @classmethod
+    def list_renderers(cls):
+        fn_pattern = 'render_to_'
+        return [fn.split(fn_pattern)[-1] for fn in cls.__dir__() if fn.startswith(fn_pattern)]
+

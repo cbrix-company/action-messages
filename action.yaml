@@ -1,20 +1,14 @@
-name: 'Parse output to notification message'
-description: 'Notifies to Slack when Bandit issues are found'
+name: 'Render message'
+description: 'Renders message for input and channel type'
 inputs:
-  slack-token:
-    description: 'slack token'
-    required: true
-  slack-channel:
-    description: 'slack target channel'
-    required: true
-  output-file:
-    description: 'output file name'
-    required: true
-  repo-name:
-    description: 'name of the repo scanned from GITHUB_REPOSITORY'
-    required: true
   tool:
     description: 'name of tool'
+    required: true
+  input-file:
+    description: 'input file name'
+    required: true
+  renderer:
+    description: 'name of renderer'
     required: true
 outputs:
   message:
@@ -25,8 +19,13 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - ${{ github.repository }}
+    - ${{ github.ref }}
+    - ${{ github.actor }}
+    - ${{ github.run_id }}
+    - ${{ github.sha }}
     - ${{ inputs.slack-token }}
     - ${{ inputs.slack-channel }}
-    - ${{ inputs.output-file }}
-    - ${{ inputs.repo-name }}
     - ${{ inputs.tool }}
+    - ${{ inputs.input-file }}
+    - ${{ inputs.renderer }}

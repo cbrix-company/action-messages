@@ -1,2 +1,3 @@
 #!/bin/sh -l
-python /main.py --slack-channel-id $2 --slack-token $1 --output-file $3 --repo-name $4
+context='{"repository":"$1","ref":"$2","actor":"$3","run_id":"$4","sha":"$5"}'
+python /main.py --context $context --tool $6 --input-file $7 --renderer $8

@@ -1,7 +1,7 @@
-from .base import MessageBuilderBase
+from .base import BaseMessageRenderer
 
 
-class BanditParser(MessageBuilderBase):
+class BanditParser(BaseMessageRenderer):
 
     LEVELS = {
         'UNDEFINED': 0,
