@@ -3,7 +3,7 @@ import json
 import logging
 import sys
 
-from parsers import BanditParser
+from renderers import BanditMessageRenderer
 
 
 logger = logging.getLogger(__file__)
@@ -11,7 +11,7 @@ logger.setLevel(logging.INFO)
 
 
 registry = {
-    'bandit': BanditParser,
+    'bandit': BanditMessageRenderer,
 }
 
 
@@ -26,7 +26,14 @@ def load_input(file_path):
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser(description='Process some integers.')
     arg_parser.add_argument('--context', type=str, dest='context', required=True)
-    arg_parser.add_argument('--tool', type=str, dest='tool', help='name of tool', required=True, choices=registry.keys())
+    arg_parser.add_argument(
+        '--tool',
+        type=str,
+        dest='tool',
+        help='name of tool',
+        required=True,
+        choices=registry.keys()
+    )
     arg_parser.add_argument('--input-file', type=str, dest='input_file', required=True, help='path to tool output file')
     arg_parser.add_argument('--renderer', type=str, dest='renderer', required=True)
 
@@ -42,6 +49,8 @@ if __name__ == '__main__':
     renderers = parser_cls.list_renderers()
     if params.renderer not in renderers:
         sys.exit(f"{parser_cls.__name__} has no '{fn_name}' method")
+
+    # TODO: load context json
 
     # instantiate parser class
     output_data = load_input(params.input_file)

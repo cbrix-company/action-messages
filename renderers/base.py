@@ -13,12 +13,15 @@ class BaseMessageRenderer:
     """
 
     def __init__(self, output, **context):
-        self.output
+        self.output = output
         self.context = context
-        self.context.update(self.parse())
+        self.context.update(self.get_context_data())
 
-    def parse(self):
-        raise NotImplementedError
+    def get_context_data(self):
+        """
+        Use this method to extend the context dictionary for use in the 'render_to_* methods'
+        """
+        return {}
 
     def is_empty(self):
         raise NotImplementedError
@@ -26,5 +29,4 @@ class BaseMessageRenderer:
     @classmethod
     def list_renderers(cls):
         fn_pattern = 'render_to_'
-        return [fn.split(fn_pattern)[-1] for fn in cls.__dir__() if fn.startswith(fn_pattern)]
-
+        return [fn.split(fn_pattern)[-1] for fn in dir(cls) if fn.startswith(fn_pattern)]

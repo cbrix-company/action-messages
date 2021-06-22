@@ -1,7 +1,7 @@
 from .base import BaseMessageRenderer
 
 
-class BanditParser(BaseMessageRenderer):
+class BanditMessageRenderer(BaseMessageRenderer):
     """
     Renders top 2 bandit findings
     """
@@ -13,7 +13,7 @@ class BanditParser(BaseMessageRenderer):
         'HIGH': 3,
     }
 
-    def parse(self):
+    def get_context_data(self):
         distribution = {
             'UNDEFINED': 0,
             'LOW': 0,
@@ -39,8 +39,8 @@ class BanditParser(BaseMessageRenderer):
                 )
             )
 
-        sorted_by_severity = sorted(results, key = lambda x: x[1], reverse=True)
-        sorted_by_confidence = sorted(sorted_by_severity, key = lambda x: x[2], reverse=True)
+        sorted_by_severity = sorted(results, key=lambda x: x[1], reverse=True)
+        sorted_by_confidence = sorted(sorted_by_severity, key=lambda x: x[2], reverse=True)
 
         return {
             'top_issues': sorted_by_confidence[:2],
@@ -49,19 +49,22 @@ class BanditParser(BaseMessageRenderer):
         }
 
     def is_empty(self):
-        len(self.output['results']) > 0
+        return len(self.output['results']) > 0
 
     def render_to_slack(self):
-        repo_name = self.context['repo_name']
+        repo_name = self.context['repository']
         distribution = self.context['distribution']
-        runtime = self.context['run_time']
+        runtime = self.context['runtime']
 
+        high = distribution["HIGH"]
+        medium = distribution["MEDIUM"]
+        low = distribution["LOW"]
         header = (
             f"*Security Control:* Bandit\n"
             f"*Repo:* {repo_name}\n"
             f"*Run time:* {runtime}\n"
             f"*Output:* Link\n"
-            f'*Findings:* High ({distribution["HIGH"]}), Medium ({distribution["MEDIUM"]}), Low ({distribution["LOW"]})\n\n\n'
+            f'*Findings:* High ({high}), Medium ({medium}), Low ({low})\n\n\n'
             f"*Top Findings:*"
         )
 
@@ -84,7 +87,13 @@ class BanditParser(BaseMessageRenderer):
             line = finding[6]
             severity = finding[7]
             code = finding[5]
-            block_text = f"*Finding #{idx+1}*\n\n*Name:* {name}\n*Filename:* {file_name}\n*Line number:* {line}\n*Severity:* {severity}\n```{code}```"
+            block_text = (
+                f"*Finding #{idx+1}*\n\n"
+                f"*Name:* {name}\n"
+                f"*Filename:* {file_name}\n"
+                f"*Line number:* {line}\n"
+                f"*Severity:* {severity}\n```{code}```"
+            )
 
             block = {
                 "type": "section",
