@@ -2,6 +2,9 @@ from .base import BaseMessageRenderer
 
 
 class BanditParser(BaseMessageRenderer):
+    """
+    Renders top 2 bandit findings
+    """
 
     LEVELS = {
         'UNDEFINED': 0,
