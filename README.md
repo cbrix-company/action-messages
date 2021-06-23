@@ -22,6 +22,13 @@ Supported inputs:
     tool: bandit
     input-file: 'bandit_output.json'
     renderer: slack
+
+    # github inputs that could be needed for rendering a message
+    repository: ${{ github.repository }}
+    ref: ${{ github.ref }}
+    actor: ${{ github.actor }}
+    run_id: ${{ github.run_id }}
+    sha: ${{ github.sha }}
 ```
 
 ## Outputs

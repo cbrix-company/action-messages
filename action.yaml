@@ -1,6 +1,24 @@
 name: 'Render message'
 description: 'Renders message for input and channel type'
 inputs:
+  # github context
+  repository:
+    description: github repository
+    required: true
+  ref:
+    description: github ref
+    required: true
+  actor:
+    description: github actor
+    required: true
+  run_id:
+    description: github run_id
+    required: true
+  sha:
+    description: github sha
+    required: true
+
+  # regular input parameters
   tool:
     description: 'name of tool'
     required: true
@@ -19,11 +37,11 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - "${{ github.repository }}"
-    - "${{ github.ref }}"
-    - "${{ github.actor }}"
-    - "${{ github.run_id }}"
-    - "${{ github.sha }}"
+    - ${{ inputs.repository }}
+    - ${{ inputs.ref }}
+    - ${{ inputs.actor }}
+    - ${{ inputs.run_id }}
+    - ${{ inputs.sha }}
     - ${{ inputs.tool }}
     - ${{ inputs.input-file }}
     - ${{ inputs.renderer }}
