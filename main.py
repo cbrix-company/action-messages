@@ -50,11 +50,12 @@ if __name__ == '__main__':
     if params.renderer not in renderers:
         sys.exit(f"{parser_cls.__name__} has no '{fn_name}' method")
 
-    # TODO: load context json
+    # load json context
+    context = json.loads(params.context)
 
     # instantiate parser class
     output_data = load_input(params.input_file)
-    parser = parser_cls(output_data, params.context)
+    parser = parser_cls(output_data, **context)
 
     # call renderer function
     render_fn = getattr(parser, fn_name)
