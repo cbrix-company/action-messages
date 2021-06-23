@@ -19,13 +19,11 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ github.repository }}
-    - ${{ github.ref }}
-    - ${{ github.actor }}
-    - ${{ github.run_id }}
-    - ${{ github.sha }}
-    - ${{ inputs.slack-token }}
-    - ${{ inputs.slack-channel }}
+    - "${{ github.repository }}"
+    - "${{ github.ref }}"
+    - "${{ github.actor }}"
+    - "${{ github.run_id }}"
+    - "${{ github.sha }}"
     - ${{ inputs.tool }}
     - ${{ inputs.input-file }}
     - ${{ inputs.renderer }}
