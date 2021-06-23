@@ -107,4 +107,4 @@ class BanditMessageRenderer(BaseMessageRenderer):
 
             msg_data.append(block)
 
-        return json.dumps(msg_data)
+        return json.dumps(msg_data, separators=(',', ':'))
