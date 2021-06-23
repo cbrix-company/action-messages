@@ -69,6 +69,7 @@ class TestBanditMessageRenderer:
         output = load_fixture('bandit_with_results.json')
         renderer = self.renderer(output, repository='cbrix-company/test')
         message = renderer.render_to_slack()
+        import ipdb; ipdb.set_trace()
         assert json.loads(message) == [
             {
                 'type': 'section',
