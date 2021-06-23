@@ -1,3 +1,5 @@
+import json
+
 from renderers import BanditMessageRenderer
 
 from .utils import load_fixture
@@ -67,7 +69,7 @@ class TestBanditMessageRenderer:
         output = load_fixture('bandit_with_results.json')
         renderer = self.renderer(output, repository='cbrix-company/test')
         message = renderer.render_to_slack()
-        assert message == [
+        assert json.loads(message) == [
             {
                 'type': 'section',
                 'text': {
