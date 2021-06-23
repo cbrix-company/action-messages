@@ -1,9 +1,14 @@
-# Cbrix Notifier
+# Github Action - Messages
 
-This action takes parses various outputs that can be passed onto [cbrix-company/action-notifier](https://github.com/cbrix-company/action-notifier)
+This action is designed to take input from a range of security tools, parse it and render it to a message format like e.g. Slack or Email.
 
-Supported channels:
+This action's outputs can be passed onto [cbrix-company/action-notifier](https://github.com/cbrix-company/action-notifier) which is responsible for sending messages.
+
+Supported message formats:
 * Slack
+
+Supported inputs:
+* Bandit
 
 ## Examples
 
