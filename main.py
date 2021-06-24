@@ -77,4 +77,5 @@ if __name__ == '__main__':
 
     # Set Github outputs
     print('::set-output name={0}::{1}'.format('output-file', params.output_file))
-    print('::set-output name={0}::{1}'.format('isEmpty', parser.is_empty()))
+    is_empty = str(parser.is_empty()).lower()
+    print('::set-output name={0}::{1}'.format('isEmpty', is_empty))
