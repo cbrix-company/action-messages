@@ -19,7 +19,7 @@ class TestBaseMessageRenderer:
 
     def test_constructor(self):
         renderer = DummyMessageRenderer('test')
-        assert renderer.output == 'test'
+        assert renderer.input == 'test'
         assert renderer.context == {'test': 'test'}
         assert not renderer.is_empty()
         assert renderer.render_to_slack() == 'test slack message'

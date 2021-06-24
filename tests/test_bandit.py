@@ -69,40 +69,42 @@ class TestBanditMessageRenderer:
         output = load_fixture('bandit_with_results.json')
         renderer = self.renderer(output, repository='cbrix-company/test')
         message = renderer.render_to_slack()
-        assert json.loads(message) == [
-            {
-                'type': 'section',
-                'text': {
-                    'type': 'mrkdwn',
-                    'text': (
-                        '*Security Control:* Bandit\n'
-                        '*Repo:* cbrix-company/test\n'
-                        '*Run time:* 2021-06-13T18:31:06Z\n'
-                        '*Output:* Link\n'
-                        '*Findings:* High (0), Medium (0), Low (1)\n\n\n'
-                        '*Top Findings:*'
-                    )
+        assert json.loads(message) == {
+            'blocks': [
+                {
+                    'type': 'section',
+                    'text': {
+                        'type': 'mrkdwn',
+                        'text': (
+                            '*Security Control:* Bandit\n'
+                            '*Repo:* cbrix-company/test\n'
+                            '*Run time:* 2021-06-13T18:31:06Z\n'
+                            '*Output:* Link\n'
+                            '*Findings:* High (0), Medium (0), Low (1)\n\n\n'
+                            '*Top Findings:*'
+                        )
+                    }
+                },
+                {
+                    'type': 'divider'
+                },
+                {
+                    'type': 'section',
+                    'text': {
+                        'type': 'mrkdwn',
+                        'text': (
+                            '*Finding #1*\n\n'
+                            '*Name:* Possible hardcoded password: \'root\'\n'
+                            '*Filename:* test_package/password.py\n'
+                            '*Line number:* 2\n'
+                            '*Severity:* LOW\n'
+                            '```'
+                                '1 def someFunction2(password):\n'
+                                '2     if password == "root":\n'
+                                '3         print("OK, logged in")\n'
+                            '```'
+                        )
+                    }
                 }
-            },
-            {
-                'type': 'divider'
-            },
-            {
-                'type': 'section',
-                'text': {
-                    'type': 'mrkdwn',
-                    'text': (
-                        '*Finding #1*\n\n'
-                        '*Name:* Possible hardcoded password: \'root\'\n'
-                        '*Filename:* test_package/password.py\n'
-                        '*Line number:* 2\n'
-                        '*Severity:* LOW\n'
-                        '```'
-                            '1 def someFunction2(password):\n'
-                            '2     if password == "root":\n'
-                            '3         print("OK, logged in")\n'
-                        '```'
-                    )
-                }
-            }
-        ]
+            ]
+        }

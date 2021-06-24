@@ -12,8 +12,8 @@ class BaseMessageRenderer:
         return False
     """
 
-    def __init__(self, input, **context):
-        self.input = input
+    def __init__(self, _input, **context):
+        self.input = _input
         self.context = context
         self.context.update(self.get_context_data())
 

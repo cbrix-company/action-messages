@@ -35,7 +35,7 @@ if __name__ == '__main__':
         choices=registry.keys()
     )
     arg_parser.add_argument('--input-file', type=str, dest='input_file', required=True, help='input file')
-    arg_parser.add_argument('--output-file', type=str, dest='output_file', required=True, help='path to rendered output file')
+    arg_parser.add_argument('--output-file', type=str, dest='output_file', required=True, help='output file')
     arg_parser.add_argument('--renderer', type=str, dest='renderer', required=True)
 
     params = arg_parser.parse_args()
