@@ -15,6 +15,15 @@ class BanditMessageRenderer(BaseMessageRenderer):
         'HIGH': 3,
     }
 
+    message_header = (
+        "*Security Control:* Bandit\n"
+        "*Repo:* {repo_name}\n"
+        "*Run time:* {runtime}\n"
+        "*Output:* Link\n"
+        '*Findings:* High ({high}), Medium ({medium}), Low ({low})\n\n\n'
+        "*Top Findings:*"
+    )
+
     def get_context_data(self):
         distribution = {
             'UNDEFINED': 0,
@@ -61,21 +70,19 @@ class BanditMessageRenderer(BaseMessageRenderer):
         high = distribution["HIGH"]
         medium = distribution["MEDIUM"]
         low = distribution["LOW"]
-        header = (
-            f"*Security Control:* Bandit\n"
-            f"*Repo:* {repo_name}\n"
-            f"*Run time:* {runtime}\n"
-            f"*Output:* Link\n"
-            f'*Findings:* High ({high}), Medium ({medium}), Low ({low})\n\n\n'
-            f"*Top Findings:*"
-        )
 
         msg_data = [
             {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": header
+                    "text": self.__class__.message_header.format(
+                        repo_name=repo_name,
+                        runtime=runtime,
+                        high=high,
+                        medium=medium,
+                        low=low
+                    ),
                 }
             },
             {
