@@ -25,6 +25,9 @@ inputs:
   input-file:
     description: 'input file name'
     required: true
+  output-file:
+    description: 'output file name'
+    required: true
   renderer:
     description: 'name of renderer'
     required: true
@@ -44,4 +47,5 @@ runs:
     - ${{ inputs.sha }}
     - ${{ inputs.tool }}
     - ${{ inputs.input-file }}
+    - ${{ inputs.output-file }}
     - ${{ inputs.renderer }}
