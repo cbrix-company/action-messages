@@ -31,7 +31,6 @@ def load_input(file_path):
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser(description='Process some integers.')
-    arg_parser.add_argument('--context', type=str, required=True)
     arg_parser.add_argument('--tool', type=str, help='name of tool', required=True, choices=registry.keys())
     arg_parser.add_argument('--input-file', type=str, dest='input_file', required=True, help='input file')
     arg_parser.add_argument('--output-file', type=str, dest='output_file', required=True, help='output file')
