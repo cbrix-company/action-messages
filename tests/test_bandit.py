@@ -58,12 +58,12 @@ class TestBanditMessageRenderer:
     def test_is_empty_no_results(self):
         output = load_fixture('bandit_no_results.json')
         renderer = self.renderer(output)
-        assert not renderer.is_empty()
+        assert renderer.is_empty()
 
     def test_is_empty_with_results(self):
         output = load_fixture('bandit_with_results.json')
         renderer = self.renderer(output)
-        assert renderer.is_empty()
+        assert not renderer.is_empty()
 
     def test_render_to_slack(self):
         output = load_fixture('bandit_with_results.json')

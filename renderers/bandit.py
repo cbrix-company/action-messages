@@ -60,7 +60,7 @@ class BanditMessageRenderer(BaseMessageRenderer):
         }
 
     def is_empty(self):
-        return len(self.input['results']) > 0
+        return len(self.input['results']) == 0
 
     def render_to_slack(self):
         repo_name = self.context['repository']
