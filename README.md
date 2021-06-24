@@ -34,7 +34,7 @@ Supported inputs:
 ## Outputs
 ```yaml
 # rendered message
-${{ steps.bandit-to-slack.outputs.message }}
+${{ steps.bandit-to-slack.outputs.output-file }}
 
 # to check if message is empty
 ${{ steps.bandit-to-slack.outputs.isEmpty }}

@@ -29,8 +29,8 @@ inputs:
     description: 'name of renderer'
     required: true
 outputs:
-  message:
-    description: 'Generated message'
+  message-file:
+    description: 'file containing renedered message'
   isEmpty:
     description: 'Boolean to check that the message is not empty'
 runs:

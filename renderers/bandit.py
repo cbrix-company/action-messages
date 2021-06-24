@@ -24,7 +24,7 @@ class BanditMessageRenderer(BaseMessageRenderer):
         }
 
         results = []
-        for idx, result in enumerate(self.output['results']):
+        for idx, result in enumerate(self.input['results']):
             issue_severity = result['issue_severity']
             distribution[issue_severity] += 1
             issue_confidence = result['issue_confidence']
@@ -47,11 +47,11 @@ class BanditMessageRenderer(BaseMessageRenderer):
         return {
             'top_issues': sorted_by_confidence[:2],
             'distribution': distribution,
-            'runtime': self.output['generated_at'],
+            'runtime': self.input['generated_at'],
         }
 
     def is_empty(self):
-        return len(self.output['results']) > 0
+        return len(self.input['results']) > 0
 
     def render_to_slack(self):
         repo_name = self.context['repository']
@@ -107,4 +107,4 @@ class BanditMessageRenderer(BaseMessageRenderer):
 
             msg_data.append(block)
 
-        return "'{0}'".format(json.dumps(msg_data, separators=(',', ':')))
+        return json.dumps({'blocks': msg_data}, separators=(',', ':'))

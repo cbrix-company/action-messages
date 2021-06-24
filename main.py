@@ -34,7 +34,8 @@ if __name__ == '__main__':
         required=True,
         choices=registry.keys()
     )
-    arg_parser.add_argument('--input-file', type=str, dest='input_file', required=True, help='path to tool output file')
+    arg_parser.add_argument('--input-file', type=str, dest='input_file', required=True, help='input file')
+    arg_parser.add_argument('--output-file', type=str, dest='output_file', required=True, help='path to rendered output file')
     arg_parser.add_argument('--renderer', type=str, dest='renderer', required=True)
 
     params = arg_parser.parse_args()
@@ -61,6 +62,9 @@ if __name__ == '__main__':
     render_fn = getattr(parser, fn_name)
     message = render_fn()
 
+    with open(params.output_file, 'w') as f:
+        f.write(message)
+
     # Set Github outputs
-    print('::set-output name={0}::{1}'.format('message', message))
+    print('::set-output name={0}::{1}'.format('output-file', params.output_file))
     print('::set-output name={0}::{1}'.format('isEmpty', parser.is_empty()))
